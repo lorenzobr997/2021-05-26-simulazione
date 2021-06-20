@@ -48,6 +48,29 @@ public class YelpDao {
 		}
 	}
 	
+	public List<String> getAllCity(){
+		String sql = "SELECT DISTINCT city FROM Business ORDERED BY city";
+		List<String> result = new ArrayList<>();
+		Connection conn = DBConnect.getConnection();
+
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
+				String city = res.getString("city");
+				result.add(city);
+			}
+			res.close();
+			st.close();
+			conn.close();
+			return result;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<Review> getAllReviews(){
 		String sql = "SELECT * FROM Reviews";
 		List<Review> result = new ArrayList<Review>();
